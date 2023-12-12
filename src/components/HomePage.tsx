@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
   // 定义处理登录的函数
   const handleLogin = () => {
     // 从环境变量中获取正确的密码
-    const correctPassword = process.env.VERCEL_PASSWORD;
+    const correctPassword = process.env.Virus_PASSWORD;
     // 检查输入的密码是否与正确的密码匹配
     if (password === correctPassword) {
       // 如果密码匹配，更新登录状态为已登录
