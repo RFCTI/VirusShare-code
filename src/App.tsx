@@ -4,7 +4,7 @@ import VirusAPI from './api'; // 导入我们之前创建的 Virus Share API 封
 function App() {
   const [virusInfo, setVirusInfo] = useState<any>(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  const apiKey = 'YOUR_API_KEY'; // 替换为你的 Virus Share API 密钥
+  const apiKey = 'process.env.VIRUS_API_KEY'; // 替换为你的 Virus Share API 密钥
 
   useEffect(() => {
     // 获取病毒信息示例
