@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HashList from './HashList';
 
 // 定义HomePage组件
 const HomePage: React.FC = () => {
@@ -46,6 +47,16 @@ const HomePage: React.FC = () => {
     </div>
   );
 };
+class HomePage extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Home Page</h1>
+        <HashList />
+      </div>
+    );
+  }
+}
 
 // 导出HomePage组件
 export default HomePage;
