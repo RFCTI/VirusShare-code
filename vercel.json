@@ -20,7 +20,4 @@
       "dest": "/$1"
     }
   ],
-  "env": {
-    "VIRUS_API_KEY": "@virus_api_key"
-  }
 }
