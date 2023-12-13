@@ -1,53 +1,65 @@
 import React, { useState } from 'react';
-import { fetchData } from '../utils/api';
+import axios from 'axios';
+import { saveAs } from 'file-saver';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const QueryPage: React.FC = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [outputValue, setOutputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [hashes, setHashes] = useState('');
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const apikey = process.env.REACT_APP_VIRUS_SHARE_API_KEY;
+
+  const handleHashesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setHashes(event.target.value);
   };
 
   const handleQuery = async () => {
-    if (inputValue) {
-      setIsLoading(true);
+    setLoading(true);
+    const hashList = hashes.split('\n').filter(hash => hash.trim() !== '');
+    let tempResults = [];
 
-      try {
-        const response = await fetchData(inputValue); // 调用发送API请求的工具函数
-        setOutputValue(JSON.stringify(response, null, 2)); // 将响应数据转换为格式化的JSON字符串
-      } catch (error) {
-        console.error('查询失败:', error);
-        setOutputValue('查询失败，请重试');
-      }
-
-      setIsLoading(false);
+    for (const hash of hashList) {
+      const response = await axios.get(`https://virusshare.com/apiv2/file?apikey=${apikey}&hash=${hash}`);
+      tempResults.push(response.data);
+      setResults(tempResults);
+      await new Promise(r => setTimeout(r, 25000)); // Wait for 25 seconds before the next request
     }
+
+    setLoading(false);
   };
 
-  const handleDownload = () => {
-    // 下载当前查询结果的逻辑
-    // ...
+  const downloadResults = () => {
+    const json = JSON.stringify(results, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    saveAs(blob, 'query-results.json');
   };
 
   return (
-    <div>
-      <h2>查询页面</h2>
-      <div>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
-        <button onClick={handleQuery} disabled={isLoading}>
-          查询
+    <div className="query-page">
+      <div className="query-input">
+        <textarea
+          value={hashes}
+          onChange={handleHashesChange}
+          placeholder="Enter MD5 or hash values, each on a new line."
+        />
+        <button onClick={handleQuery} disabled={loading}>
+          {loading ? 'Querying...' : 'Start Query'}
         </button>
       </div>
-      {isLoading ? (
-        <div>正在查询，请稍候...</div>
-      ) : (
-        <div>
-          <pre>{outputValue}</pre>
-          <button onClick={handleDownload}>下载结果</button>
-        </div>
-      )}
+      <div className="query-output">
+        {results.map((result, index) => (
+          <div key={index}>
+            <SyntaxHighlighter language="json" style={docco}>
+              {JSON.stringify(result, null, 2)}
+            </SyntaxHighlighter>
+          </div>
+        ))}
+      </div>
+      <div className="download-button">
+        <button onClick={downloadResults}>Download Results</button>
+      </div>
     </div>
   );
 };
