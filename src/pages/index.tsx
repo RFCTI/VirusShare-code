@@ -1,15 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import QueryPage from './components/QueryPage';
+import React, { useState } from 'react';
+import QueryPage from './QueryPage';
 
-ReactDOM.render(
-  <Router>
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route path="/query" component={QueryPage} />
-    </Switch>
-  </Router>,
-  document.getElementById('root')
-);
+const IndexPage: React.FC = () => {
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleLogin = () => {
+    const accessPassword = process.env.REACT_APP_ACCESS_PASSWORD;
+    if (password === accessPassword) {
+      setIsAuthenticated(true);
+    } else {
+      alert('Incorrect password');
+    }
+  };
+
+  if (isAuthenticated) {
+    return <QueryPage />;
+  }
+
+  return (
+    <div className="login-page">
+      <input
+        type="password"
+        placeholder="Enter Access Password"
+        value={password}
+        onChange={handlePasswordChange}
+      />
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
+};
+
+export default IndexPage;
