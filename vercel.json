@@ -44,9 +44,9 @@
   ],
   "cleanUrls": true,
   "trailingSlash": false,
-  },
   "build": {
     "env": {
       "ANOTHER_SECRET": "@another_secret"
     }
   }
+}
