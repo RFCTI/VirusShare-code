@@ -10,16 +10,6 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "redirects": [
     {
       "source": "/old-url",
@@ -29,8 +19,12 @@
   ],
   "rewrites": [
     {
-      "source": "/some/old-path",
-      "destination": "/some/new-path"
+      "source": "/api/(.*)",
+      "destination": "/api/$1.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -48,6 +42,8 @@
       ]
     }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "env": {
     "MY_SECRET": "@my_secret"
   },
