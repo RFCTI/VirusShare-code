@@ -1,11 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>React App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirusShare Hash Checker</title>
+    <style>
+        /* 这里添加您的CSS样式 */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #login-container, #query-container {
+            display: none;
+        }
+        #query-container.active, #login-container.active {
+            display: block;
+        }
+        #hash-input, #output {
+            width: 45%;
+            float: left;
+            margin: 5px;
+            padding: 10px;
+        }
+        #output {
+            background-color: #f0f0f0;
+            white-space: pre-wrap;
+            overflow: auto;
+        }
+        /* 添加更多样式... */
+    </style>
+</head>
+<body>
+    <div id="login-container" class="active">
+        <input type="password" id="password-input" placeholder="Enter Access Password">
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+
+    <div id="query-container">
+        <div style="text-align: center;">
+            <button onclick="configureApiKey()">Configure API Key</button>
+        </div>
+        <textarea id="hash-input" placeholder="Enter MD5/Hashes (one per line)"></textarea>
+        <pre id="output"></pre>
+        <div style="text-align: center;">
+            <button onclick="queryHashes()">Query Hashes</button>
+            <button onclick="downloadResults()">Download Results</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 代码
+        let accessPassword; // 从某处获取访问密码
+        let virusShareApiKey; // 从某处获取VirusShare API Key
+
+        function checkPassword() {
+            const inputPassword = document.getElementById('password-input').value;
+            if (inputPassword === accessPassword) {
+                document.getElementById('login-container').classList.remove('active');
+                document.getElementById('query-container').classList.add('active');
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function configureApiKey() {
+            // 实现配置API Key的逻辑
+        }
+
+        async function queryHashes() {
+            // 实现查询哈希值的逻辑
+        }
+
+        function downloadResults() {
+            // 实现下载结果的逻辑
+        }
+
+        // 实现其他必要的功能
+
+        // 注意：由于安全原因，不建议在客户端JavaScript代码中直接嵌入API密钥和密码。
+        // 应该使用后端服务来管理这些敏感信息。
+    </script>
+</body>
 </html>
