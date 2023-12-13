@@ -1,54 +1,109 @@
-/* Reset styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* 全局样式 */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* 通用容器样式 */
+.container {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 登录页面样式 */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-page input[type="password"] {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.login-page button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 查询页面样式 */
+.query-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* API Key 配置按钮样式 */
+.api-key-button {
+  margin: 0 auto;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 输入框和输出框的容器 */
+.query-container {
+  display: flex;
+  flex: 1;
+}
+
+/* 输入框样式 */
+.query-input {
+  flex: 1;
+  padding: 10px;
+}
+
+.query-input textarea {
+  width: 100%;
+  height: 100%;
+}
+
+/* 输出框样式 */
+.query-output {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* 下载按钮样式 */
+.download-button {
+  text-align: center;
+  padding: 20px;
+}
+
+.download-button button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 等待样式 */
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-indicator::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 响应式布局调整 */
+@media (max-width: 768px) {
+  .query-container {
+    flex-direction: column;
   }
-  
-  /* Global styles */
-  body {
-    font-family: Arial, sans-serif;
-  }
-  
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  input[type="text"] {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  pre {
-    padding: 10px;
-    font-size: 14px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: auto;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+}
